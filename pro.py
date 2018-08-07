@@ -2,7 +2,7 @@ import sys
 import random
 import argparse
 import time
-from tqdm import tqdm
+#from tqdm import tqdm
 
 
 TOTAL = 16 # default is 4x4
