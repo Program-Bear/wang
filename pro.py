@@ -99,7 +99,7 @@ if __name__ == "__main__":
     parser.add_argument('-H','--height',type=int, default=4, help = "宫格的宽，默认宽度为4")
     parser.add_argument('--display',help = "进入展示模式", action='store_true')
     parser.add_argument('--debug', help='输出调试信息',action='store_true')
-
+    parser.add_argument('-L','--limit',type=float,default=10, help="设置答题时长")
     args = parser.parse_args()
     bank_path = args.BankPath
     output_path = args.OutputPath
@@ -108,6 +108,7 @@ if __name__ == "__main__":
     height = args.height
     TOTAL = width * height
     DEBUG = args.debug
+    limit = args.limit
     if (width < height):
         print("长小于宽？小学数学是体育老师教的？帮你交换了")
         temp = width
@@ -122,12 +123,15 @@ if __name__ == "__main__":
     random.shuffle(pick_ans)
 
     if (args.display):
-        print("进入答题模式，输入n下一道，输入e退出")
+        print("进入答题模式，每题时间限制%d秒，输入n下一道，输入e退出"%limit)
+        count = 0
+        tot = 0
+        tot_time = 0
         for i in pick_ans:
             answer = bank[i]
             value = gen_wrong(answer, bank)
             problem = gen_output(width, height, value)
-            print(problem,end='')
+            print(problem, end='')
             fin = False
             start = time.time()
             while(1):
@@ -137,12 +141,18 @@ if __name__ == "__main__":
                 if (temp == 'e'):
                     fin = True
                     break
-            print("正确答案为：%s"%answer)
-            spend = (time.time() - start)
-            print("用时: " + str(spend) + '秒\n')
             if (fin):
                 break
+            print("正确答案为：%s"%answer)
+            count += 1
+            spend = (time.time() - start)
+            if (spend > limit):
+                tot += 1
+            tot_time += spend
+            print("用时: " + str(spend) + '秒\n')
         print("答题结束")
+        print("你一共答了%d题，其中有%d题用时超过了时间限制"%(count,tot))
+        print("平均用时:%s秒, 超时比例:%s"%(str(float(tot_time)/count), str(float(tot)/count)))
     else:
         print("生成%dx%d的众里寻它"%(width, height))
         wang = open(output_path, 'w')
