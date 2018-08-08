@@ -81,10 +81,11 @@ def gen_wrong(ans, bank):
 def gen_output(width, height, value):
     output = ''
     assert(len(value) == width * height)
-
+    count = 0
     for i in range(0, height):
         for j in range(0, width):
-            output += value[i * height + j] + "  "
+            output += value[count] + "  "
+            count += 1
         output += '\n'
     return output
 
@@ -127,6 +128,8 @@ if __name__ == "__main__":
         tot_time = 0
         for i in pick_ans:
             answer = bank[i]
+            if (len(answer) == 0):
+                continue 
             value = gen_wrong(answer, bank)
             problem = gen_output(width, height, value)
             print(problem, end='')
@@ -152,15 +155,19 @@ if __name__ == "__main__":
         print("你一共答了%d题，其中有%d题用时超过了时间限制"%(count,tot))
         print("平均用时:%s秒, 超时比例:%s"%(str(float(tot_time)/count), str(float(tot)/count)))
     else:
-        print("生成%dx%d的众里寻它"%(width, height))
+        print("生成%dx%d的众里寻他"%(width, height))
         wang = open(output_path, 'w')
         ans = open(ans_path,'w')
 
         for i in pick_ans:
             answer = bank[i]
+            if (len(answer) == 0):
+                continue
             if (DEBUG):
-                print("开始生成%s"%answer)
+                print("生成%s"%answer)
             value = gen_wrong(answer, bank)
+            if (DEBUG):
+                print(value)
             problem = gen_output(width, height, value)
             
             wang.write(problem + "\n")
