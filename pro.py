@@ -39,7 +39,7 @@ def shuffle(line, is_ans, ans, now_value):
             print("删掉了%s"%line[target])
 
         for i in range(0, length):
-            if (line[i] in now_value and (i in l)):
+            if (((line[i] in now_value) or (line[i] in ans)) and (i in l)):
                 l.remove(i)
         
         random.shuffle(l)
@@ -73,8 +73,6 @@ def gen_wrong(ans, bank):
         used_wrong.append(now_line)    
         if (ans == bank[now_line]):
             continue
-        #print(now_wrong)
-        #print(shuffle(bank[now_line], False, ans, now_wrong))
         now_wrong += shuffle(bank[now_line], False, ans, now_wrong)
     now_wrong = now_wrong[0:wrong_num]
 
