@@ -92,6 +92,7 @@ def gen_output(width, height, value):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--BankPath",  default='bank.txt',help='题库路径')
+    parser.add_argument("--AnswerPick",default='answer_pick.txt',help='题目选择路径')
     parser.add_argument("--OutputPath",default='wang.txt',help='宫格输出路径')
     parser.add_argument("--AnsPath",   default='ans.txt',help='答案输出路径')
     parser.add_argument('-W','--width',type=int, default=4, help = "宫格的长，默认长度为4")
@@ -103,6 +104,7 @@ if __name__ == "__main__":
     bank_path = args.BankPath
     output_path = args.OutputPath
     ans_path = args.AnsPath
+    pick_path = args.AnswerPick
     width = args.width
     height = args.height
     TOTAL = width * height
@@ -114,11 +116,23 @@ if __name__ == "__main__":
         width = height
         height = temp
 
-    bank = open(bank_path,'r').readlines()
+    bank_object = open(bank_path,'r')
+    bank = bank_object.readlines()
     for i in range(0, len(bank)):
         bank[i] = bank[i].strip()
-
-    pick_ans = [i for i in range(0, len(bank))]
+    bank_object.close()
+    
+    pick_object = open(pick_path,'r')
+    pick = pick_object.readlines()
+    pick_object.close()
+    pick_ans = []
+    for i in pick:
+        num = 0
+        try:
+            num = int(i.strip())
+        except:
+            print("pick文件不合法")
+        pick_ans.append(num)
     random.shuffle(pick_ans)
 
     if (args.display):
