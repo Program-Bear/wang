@@ -91,10 +91,10 @@ def gen_output(width, height, value):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--BankPath",  default='bank.txt',help='题库路径')
-    parser.add_argument("--AnswerPick",default='answer_pick.txt',help='题目选择路径')
-    parser.add_argument("--OutputPath",default='wang.txt',help='宫格输出路径')
-    parser.add_argument("--AnsPath",   default='ans.txt',help='答案输出路径')
+    parser.add_argument("--BankPath",  default='../Bank/bank.txt',help='题库路径')
+    parser.add_argument("--AnswerPick",default='../Bank/answer_pick.txt',help='题目选择路径')
+    parser.add_argument("--OutputPath",default='../Problem/wang.txt',help='宫格输出路径')
+    parser.add_argument("--AnsPath",   default='../Problem/ans.txt',help='答案输出路径')
     parser.add_argument('-W','--width',type=int, default=4, help = "宫格的长，默认长度为4")
     parser.add_argument('-H','--height',type=int, default=4, help = "宫格的宽，默认宽度为4")
     parser.add_argument('--display',help = "进入展示模式", action='store_true')
